@@ -6,6 +6,11 @@
       url = "nixpkgs/nixos-unstable";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     alejandra = {
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,16 +25,18 @@
   outputs = {
     self,
     nixpkgs,
+    home-manager,
     alejandra,
     nixos-wsl,
     ...
   }: let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
   in {
     nixosConfigurations = {
       tutorial = lib.nixosSystem {
-        system = system;
+        inherit system;
         modules = [
           nixos-wsl.nixosModules.wsl
           ./configuration.nix
@@ -37,6 +44,15 @@
             environment.systemPackages = [alejandra.defaultPackage.${system}];
           }
         ];
+      };
+
+      homeConfigurations = {
+        evan = lib.nixosSystem {
+          inherit pkgs;
+          modules = [
+            ./home.nix
+          ];
+        };
       };
     };
   };
