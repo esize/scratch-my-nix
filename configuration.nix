@@ -19,6 +19,7 @@
     neovim
     git
     nixd
+    just
   ];
 
   programs.nix-ld = {

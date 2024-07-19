@@ -70,7 +70,7 @@
   #  /etc/profiles/per-user/evan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   programs.bash = {
