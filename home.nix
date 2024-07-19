@@ -75,8 +75,9 @@
 
   programs.bash = {
     enable = true;
-    aliases = {
+    shellAliases = {
       ll = "ls -l";
+      la = "ls -akl";
     };
   };
 
