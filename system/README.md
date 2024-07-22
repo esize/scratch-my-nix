@@ -19,4 +19,7 @@ I use this to pass a few attribute sets:
 `inputs` - Flake inputs (see [flake.nix](../flake.nix) for more details)
 `pkgs-stable` - Allows me to include stable versions of packages along with (my default) unstable versions of packages
 
-- [App](./{name}) - Necessary system-level config to get apps working
+
+My system-level Nix modules are organized into this directory:
+
+- [App](./{app}) - Necessary system-level config to get apps working

@@ -11,6 +11,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     alejandra = {
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,11 +41,38 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     nixosConfigurations = {
-      tutorial = lib.nixosSystem {
+      desktop = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./profiles/desktop/configuration.nix
+          {
+            environment.systemPackages = [alejandra.defaultPackage.${system}];
+          }
+        ];
+      };
+      laptop = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./profiles/laptop/configuration.nix
+          {
+            environment.systemPackages = [alejandra.defaultPackage.${system}];
+          }
+        ];
+      };
+      server = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./profiles/laptop/configuration.nix
+          {
+            environment.systemPackages = [alejandra.defaultPackage.${system}];
+          }
+        ];
+      };
+      wsl = lib.nixosSystem {
         inherit system;
         modules = [
           nixos-wsl.nixosModules.wsl
-          ./configuration.nix
+          ./profiles/wsl/configuration.nix
           {
             environment.systemPackages = [alejandra.defaultPackage.${system}];
           }
@@ -50,7 +83,7 @@
       evan = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./home.nix
+          ./user/default.nix
         ];
       };
     };

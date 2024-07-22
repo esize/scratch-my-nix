@@ -22,6 +22,7 @@
     just
   ];
 
+  # Necessary for VSCode Remote-SSH
   programs.nix-ld = {
     enable = true;
     package = pkgs.nix-ld-rs;

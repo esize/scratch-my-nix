@@ -11,7 +11,6 @@ alias u := update
 new-profile name description:
     mkdir profiles/{{name}}
     cp templates/profile/configuration.nix profiles/{{name}}
-    cp templates/profile/home.nix profiles/{{name}}
     touch profiles/{{name}}/README.md
     echo "# {{titlecase(name)}}" >> profiles/{{name}}/README.md
     echo "{{description}}" >> profiles/{{name}}/README.md
@@ -27,7 +26,7 @@ new-system-module name description:
     touch system/{{name}}/README.md
     echo "# {{titlecase(name)}}" >> system/{{name}}/README.md
     echo "{{description}}" >> system/{{name}}/README.md
-    echo -e "\n- [{{titlecase(name)}}](./{name}) - {{description}}" >> system/README.md
+    echo -e "\n- [{{titlecase(name)}}](./{{name}}) - {{description}}" >> system/README.md
     git add system/{{name}}
     git add system/README.md
     git commit -m "added new system module '{{name}}'"
